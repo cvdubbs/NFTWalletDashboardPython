@@ -99,6 +99,23 @@ def NFTs_owned_alchemy(walletaddress):
     df = pd.DataFrame.from_dict(dicty['ownedNFTs'])
     return df
 
+def get_os_vol(contractAddy):
+    url = f"https://api.nftport.xyz/v0/transactions/stats/{contractAddy}?chain=ethereum"
+    headers = {
+        "accept": "application/json",
+        "Authorization": "5de0f827-ce62-4eb7-95d9-6615f20d4b53"
+    }
+    response = requests.get(url, headers=headers)
+    data = response.text
+    dicty = json.loads(data)
+    df = pd.DataFrame.from_dict(dicty)
+    if df.iloc[0,0] == 'NOK':
+        return 0
+    else:
+        fp_df = df.loc[df.index == 'floor_price']
+        tv_df = df.loc[df.index == 'total_volume']
+        return tv_df.iloc[0,1]
+
 def GetCombine(walletaddress):
     """
     Combine both NFTs_owned and get_os_floor with one function
@@ -116,7 +133,9 @@ def GetCombine(walletaddress):
     """
     nfts_owned_ed = NFTs_owned(walletaddress)
     nfts_owned_ed["floor_price"] = np.nan
+    nfts_owned_ed["total_volume"] = np.nan
     for index, row in nfts_owned_ed.iterrows():
+        nfts_owned_ed.total_volume[index] = get_os_vol(nfts_owned_ed.token_address[index])
         nfts_owned_ed.floor_price[index] = get_os_floor(nfts_owned_ed.token_address[index])
     nfts_owned_ed.loc[ nfts_owned_ed["floor_price"] == "unable to fetch floor price", "floor_price"] = 0
     nfts_owned_ed["total"] = nfts_owned_ed['floor_price'] * nfts_owned_ed['size']

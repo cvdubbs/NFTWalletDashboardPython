@@ -1,0 +1,6 @@
+pyvenv.cfg
+.bin/
+.javascript/
+.lib/
+.Storage/
+.WalletValuePython/
