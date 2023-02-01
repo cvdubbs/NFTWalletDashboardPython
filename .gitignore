@@ -4,3 +4,7 @@ pyvenv.cfg
 .lib/
 .Storage/
 .WalletValuePython/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

@@ -1,5 +1,5 @@
-import NFTLib
-from NFTLib import GetCombine, NFTs_owned_alchemy, get_os_floor, NFTs_owned
+import Quants.NFTLib
+from Quants.NFTLib import GetCombine, NFTs_owned_alchemy, get_os_floor, NFTs_owned
 from web3 import Web3
 import json
 import requests
