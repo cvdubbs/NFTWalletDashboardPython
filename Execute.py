@@ -4,7 +4,6 @@ from web3 import Web3
 import json
 import requests
 from pandas import json_normalize 
-from moralis import evm_api
 import pandas as pd
 import numpy as np
 from flask import Flask, render_template, request, url_for, flash, redirect
