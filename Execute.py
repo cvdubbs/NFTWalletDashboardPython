@@ -1,5 +1,5 @@
 import Quants.NFTLib
-from Quants.NFTLib import GetCombine, NFTs_owned_alchemy, get_os_floor, NFTs_owned
+from Quants.NFTLib import GetCombine, NFTs_owned_alchemy, get_os_floor
 from web3 import Web3
 import json
 import requests
@@ -19,7 +19,7 @@ def index():
         walletaddress = request.form['WalletAddy']
         df = GetCombine(walletaddress)
         df = df.dropna()
-        df = df.drop(columns=(['token_address','urlname']))
+        df = df.drop(columns=(['token_address']))
         df = df[df.floor_price >= .000001]
         df = df[df.total_volume >= .1]
         df = df.rename(columns={"size": "Quantity", "total": "Total", "floor_price":"Floor Price", "total_volume":"Total Volume"})
